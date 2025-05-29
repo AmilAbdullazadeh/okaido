@@ -1,20 +1,22 @@
-const openButton = document.querySelector(".btn-open") as HTMLButtonElement;
-const closeButton = document.querySelector(".btn-close") as HTMLButtonElement;
-const modal = document.querySelector(".modal") as HTMLDivElement;
-const overlay = document.querySelector(".overlay") as HTMLDivElement;
+const slides = document.querySelectorAll(".slide");
+const nextBtn = document.querySelector(".btn-next");
+const prevBtn = document.querySelector(".btn-prev");
 
+let currentSlide = 0;
+let latestSlide = slides.length - 1;
 
-function toggleModal() {
-  modal.classList.toggle("hidden");
-  overlay.classList.toggle("hidden");
+function nextSlide() {
+
+  if (currentSlide > latestSlide) {
+     currentSlide = 1
+  } else {
+    currentSlide++;
+  }
+
+  slides.forEach((slide, index) => { // slide 1, slide 2, slide 3
+    (slide as HTMLElement).style.transform = `translateX(${100 * (index - currentSlide)}%)`; // 100 * (0 - 1) = -100%, 100 * (1 - 1) = 0%, 100 * (2 - 1) - 100%
+  });
+
 }
 
-closeButton.addEventListener("click", toggleModal);
-openButton.addEventListener("click", toggleModal);
-overlay.addEventListener("click", toggleModal);
-
-document.addEventListener("keydown", function (e) {
-  if (e.key === "Escape" && !modal.classList.contains("hidden")) {
-    toggleModal();
-  }
-});
+nextBtn?.addEventListener("click", nextSlide);

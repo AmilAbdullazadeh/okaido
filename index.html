@@ -1,38 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./style/home.css">
-    <script async src="./script/main.js"></script>
-    <title>Document</title>
+    <title>Carousel Slide</title>
 </head>
+<body>
+    <body>
+   <!-- slider container -->
+    <div class="slider">
 
-<body id="body">
+      <!-- slide 1 -->
+      <div class="slide">
+        <img
+          src="https://picsum.photos/200"
+          alt=""
+        />
+      </div>
 
+       <!-- slide 2 -->
+      <div class="slide">
+        <img src="https://picsum.photos/200" alt="" />
+      </div>
 
-    <section class="modal hidden">
-        <div class="flex">
-            <img src="user.png" width="50px" height="50px" alt="user" />
-            <button class="btn-close">⨉</button>
-        </div>
-        <div>
-            <h3>Stay in touch</h3>
-            <p>
-                This is a dummy newsletter form so don't bother trying to test it. Not
-                that I expect you to, anyways. :)
-            </p>
-        </div>
+       <!-- slide 3 -->
+      <div class="slide">
+        <img src="https://picsum.photos/200" alt="" />
+      </div>
 
-        <input type="email" id="email" placeholder="brendaneich@js.com" />
-        <button class="btn">Submit</button>
-    </section>
+       <!-- slide 4 -->
+      <div class="slide">
+        <img src="https://picsum.photos/200" alt="" />
+      </div>
 
-    <div class="overlay hidden"></div>
-    <button class="btn btn-open">Open Modal</button>
+       <!-- Control buttons -->
+      <button class="btn btn-next">></button>
+      <button class="btn btn-prev"><</button>
+    </div>
 
-
+    <script src="./script/main.js"></script>
+  </body>
 </body>
-
 </html>
