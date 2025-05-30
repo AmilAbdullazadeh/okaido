@@ -1,22 +1,21 @@
-const slides = document.querySelectorAll(".slide");
-const nextBtn = document.querySelector(".btn-next");
-const prevBtn = document.querySelector(".btn-prev");
+const toggle = document.getElementById("toggle");
+const refresh = document.getElementById("refresh");
+const theme = localStorage.getItem('theme'); // dark, light
 
-let currentSlide = 0;
-let latestSlide = slides.length - 1;
+if (theme === 'dark') document.body.classList.add('dark')
 
-function nextSlide() {
+function handleTheme() {
+  document.body.classList.toggle('dark')
 
-  if (currentSlide > latestSlide) {
-     currentSlide = 1
+  if (theme === 'dark') {
+    localStorage.setItem('theme', 'light')
   } else {
-    currentSlide++;
+    localStorage.setItem('theme', 'dark')
   }
-
-  slides.forEach((slide, index) => { // slide 1, slide 2, slide 3
-    (slide as HTMLElement).style.transform = `translateX(${100 * (index - currentSlide)}%)`; // 100 * (0 - 1) = -100%, 100 * (1 - 1) = 0%, 100 * (2 - 1) - 100%
-  });
-
 }
 
-nextBtn?.addEventListener("click", nextSlide);
+toggle?.addEventListener('click', handleTheme)
+
+refresh?.addEventListener('click', function() {
+  window.location.reload();
+})

@@ -1,17 +1,18 @@
-var slides = document.querySelectorAll(".slide");
-var nextBtn = document.querySelector(".btn-next");
-var prevBtn = document.querySelector(".btn-prev");
-var currentSlide = 1;
-var latestSlide = slides.length - 1;
-function nextSlide() {
-    if (currentSlide > latestSlide) {
-        currentSlide = 1;
+var toggle = document.getElementById("toggle");
+var refresh = document.getElementById("refresh");
+var theme = localStorage.getItem('theme'); // dark, light
+if (theme === 'dark')
+    document.body.classList.add('dark');
+function handleTheme() {
+    document.body.classList.toggle('dark');
+    if (theme === 'dark') {
+        localStorage.setItem('theme', 'light');
     }
     else {
-        currentSlide++;
+        localStorage.setItem('theme', 'dark');
     }
-    slides.forEach(function (slide, index) {
-        slide.style.transform = "translateX(".concat(100 * (index - currentSlide), "%)"); // 100 * (0 - 1) = -100%, 100 * (1 - 1) = 0%, 100 * (2 - 1) - 100%
-    });
 }
-nextBtn === null || nextBtn === void 0 ? void 0 : nextBtn.addEventListener("click", nextSlide);
+toggle === null || toggle === void 0 ? void 0 : toggle.addEventListener('click', handleTheme);
+refresh === null || refresh === void 0 ? void 0 : refresh.addEventListener('click', function () {
+    window.location.reload();
+});
