@@ -1,18 +1,38 @@
-var toggle = document.getElementById("toggle");
-var refresh = document.getElementById("refresh");
-var theme = localStorage.getItem('theme'); // dark, light
-if (theme === 'dark')
-    document.body.classList.add('dark');
-function handleTheme() {
-    document.body.classList.toggle('dark');
-    if (theme === 'dark') {
-        localStorage.setItem('theme', 'light');
+var player = document.getElementById('mario');
+var powerup = {
+    audio: new Audio('http://themushroomkingdom.net/sounds/wav/smb/smb_powerup.wav'),
+    play: function () {
+        this.audio.currentTime = 0;
+        this.audio.play();
+    }
+};
+function movePlayer(element, incrX, incrY) {
+    var x = Number(element.getAttribute('data-x')) + incrX;
+    var y = Number(element.getAttribute('data-y')) + incrY;
+    var speed = 10;
+    if (incrX > 0) {
+        element.style.transform = " translate(".concat(x, "px, ").concat(y, "px) scaleX(1)");
     }
     else {
-        localStorage.setItem('theme', 'dark');
+        element.style.transform = " translate(".concat(x, "px, ").concat(y, "px) scaleX(-1)");
     }
+    element.setAttribute('data-x', x.toString());
+    element.setAttribute('data-y', y.toString());
 }
-toggle === null || toggle === void 0 ? void 0 : toggle.addEventListener('click', handleTheme);
-refresh === null || refresh === void 0 ? void 0 : refresh.addEventListener('click', function () {
-    window.location.reload();
+window.addEventListener('keydown', function (e) {
+    if (player !== null) {
+        if (e.key === 'ArrowRight') {
+            player.classList.add('caminar');
+            movePlayer(player, 10, 0);
+        }
+        else if (e.key === 'ArrowLeft') {
+            player.classList.add('caminar');
+            movePlayer(player, -10, 0);
+        }
+    }
+});
+window.addEventListener('keyup', function (e) {
+    if (player !== null) {
+        player.classList.remove('caminar');
+    }
 });

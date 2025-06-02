@@ -1,82 +1,30 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+#mario {
+    width:58px;
+    height:100px;
+    border:0px solid #000;
+    background-image:url(https://cdn.rawgit.com/ManzDev/cursos-assets/gh-pages/css3/mario-sprite.png);
+    transform: translate(0, 180px);
+  }
+  
+  .big {
+    image-rendering:pixelated;
+    position:relative;
+    top:-50px;
+  }
+  
+  /* CSS animation of walking */
+  @keyframes walk {
+    0% { background-position: 0 0 }
+    100% { background-position: 120px 0 }
+  }
+  
+  .caminar {
+    animation: walk .25s steps(2) infinite forwards;
+  }
 
-/* Definition of colors */
-body {
-    /* text colors */
-    --text-white: #ffffff;
-    --text-dark: #142136;
-
-    /* background colors */
-    --bg-grey-light: #f5f5f5;
-    --bg-white: #ffffff;
-    --bg-blue-dark: #142136;
-    --bg-indigo: #6366f1;
-
-    font-family: "Inter", sans-serif;
-    line-height: 1.7;
-    background-color: var(--bg-grey-light);
-}
-
-.dark {
-    --text-white: #e6e6e6;
-    --text-dark: #ffffff;
-    --bg-grey-light: #142136;
-    --bg-white: #22395d;
-    --bg-blue-dark: #142136;
-    --bg-indigo: #7577e1;
-}
-
-.container {
-    max-width: 600px;
-    margin: 40px auto;
-    display: flex;
-    padding: 20px;
-    flex-direction: column;
-}
-
-.text-wrapper {
-    width: 100%;
-    padding: 20px;
-    background-color: var(--bg-white);
-    margin-bottom: 40px;
-    border-radius: 10px;
-}
-
-.paragraph {
-    font-size: 16px;
-    color: var(--text-dark);
-}
-
-.heading {
-    font-size: 40px;
-    letter-spacing: 1px;
-    font-weight: 900;
-    margin-bottom: 40px;
-    color: var(--text-dark);
-}
-
-.buttons {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 40px;
-}
-
-.button {
-    width: 200px;
-    padding: 5px;
-    height: 40px;
-    border: none;
-    border-radius: 10px;
-    font-family: inherit;
-    cursor: pointer;
-    background-color: var(--bg-indigo);
-    color: var(--text-white);
-    font-size: 16px;
-    font-weight: 400;
-    text-transform: capitalize;
-}
+  /*body {
+    background-image:url(http://slifty.com/wp-content/uploads/2011/08/9.jpg);
+    background-position:0 -727px;
+    background-repeat:no-repeat;
+  }
+  */

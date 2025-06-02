@@ -1,21 +1,43 @@
-const toggle = document.getElementById("toggle");
-const refresh = document.getElementById("refresh");
-const theme = localStorage.getItem('theme'); // dark, light
+var player = document.getElementById('mario') as HTMLElement | null;
 
-if (theme === 'dark') document.body.classList.add('dark')
-
-function handleTheme() {
-  document.body.classList.toggle('dark')
-
-  if (theme === 'dark') {
-    localStorage.setItem('theme', 'light')
-  } else {
-    localStorage.setItem('theme', 'dark')
+var powerup = {
+  audio: new Audio('http://themushroomkingdom.net/sounds/wav/smb/smb_powerup.wav'),
+  play: function() { 
+    this.audio.currentTime = 0;
+    this.audio.play() 
   }
 }
 
-toggle?.addEventListener('click', handleTheme)
+function movePlayer(element: HTMLElement, incrX: number, incrY: number) {
 
-refresh?.addEventListener('click', function() {
-  window.location.reload();
+  let x = Number(element.getAttribute('data-x')) + incrX;
+  let y = Number(element.getAttribute('data-y')) + incrY;
+  let speed = 10;
+
+  if (incrX > 0) {
+    element.style.transform = ` translate(${x}px, ${y}px) scaleX(1)`
+  } else {
+    element.style.transform = ` translate(${x}px, ${y}px) scaleX(-1)`
+  }
+
+  element.setAttribute('data-x', x.toString())
+  element.setAttribute('data-y', y.toString())
+}
+
+window.addEventListener('keydown', function(e) {
+  if (player !== null) {
+    if (e.key === 'ArrowRight') {
+      player.classList.add('caminar')
+      movePlayer(player, 10, 0)
+    } else if (e.key === 'ArrowLeft') {
+      player.classList.add('caminar')
+      movePlayer(player, -10, 0)
+    }
+  }
+})
+
+window.addEventListener('keyup', function(e) {
+  if (player !== null) {
+    player.classList.remove('caminar')
+  }
 })
