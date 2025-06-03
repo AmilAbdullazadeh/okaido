@@ -1,43 +1,47 @@
-var player = document.getElementById('mario') as HTMLElement | null;
+const playBtn = document.getElementById('play') as HTMLButtonElement;
+const prevBtn = document.getElementById('prev') as HTMLButtonElement;
+const nextBtn = document.getElementById('next') as HTMLButtonElement;
+const audio = document.getElementById('audio') as HTMLAudioElement;
+const cover = document.getElementById('cover') as HTMLImageElement;
+const title = document.getElementById('title') as HTMLHeadingElement;
+const musicContainer = document.getElementById('music-container') as HTMLDivElement;
+const progressContainer = document.getElementById('progress-container') as HTMLDivElement;
+const progress = document.getElementById('progress') as HTMLDivElement;
 
-var powerup = {
-  audio: new Audio('http://themushroomkingdom.net/sounds/wav/smb/smb_powerup.wav'),
-  play: function() { 
-    this.audio.currentTime = 0;
-    this.audio.play() 
-  }
+const songs = ['Juice WRLD Ft Benny Blanco - Real Shit', 'Lil Baby, Lil Durk ft Rodwave - Rich Off Pain', 'Polo G – I Know'];
+
+const songIndex = 0;
+
+function loadSong(song: string) {
+  title.textContent = song;
+  audio.src = `./music/${song}.mp3`;
+  cover.src = `./assets/${song}.jpg`;
 }
 
-function movePlayer(element: HTMLElement, incrX: number, incrY: number) {
+loadSong(songs[songIndex]);
 
-  let x = Number(element.getAttribute('data-x')) + incrX;
-  let y = Number(element.getAttribute('data-y')) + incrY;
-  let speed = 10;
-
-  if (incrX > 0) {
-    element.style.transform = ` translate(${x}px, ${y}px) scaleX(1)`
-  } else {
-    element.style.transform = ` translate(${x}px, ${y}px) scaleX(-1)`
-  }
-
-  element.setAttribute('data-x', x.toString())
-  element.setAttribute('data-y', y.toString())
+function playSong() {
+  playBtn.querySelector('i.fas')?.classList.replace('fa-play', 'fa-pause');
+  musicContainer.classList.add('play');
+  audio.play();
 }
 
-window.addEventListener('keydown', function(e) {
-  if (player !== null) {
-    if (e.key === 'ArrowRight') {
-      player.classList.add('caminar')
-      movePlayer(player, 10, 0)
-    } else if (e.key === 'ArrowLeft') {
-      player.classList.add('caminar')
-      movePlayer(player, -10, 0)
-    }
-  }
-})
+function pauseSong() {
+  playBtn.querySelector('i.fas')?.classList.replace('fa-pause', 'fa-play');
+  musicContainer.classList.remove('play');
+  audio.pause();
+}
 
-window.addEventListener('keyup', function(e) {
-  if (player !== null) {
-    player.classList.remove('caminar')
-  }
-})
+playBtn.addEventListener('click', () => {
+  const isPlaying = musicContainer.classList.contains('play');
+  isPlaying ? pauseSong() : playSong();
+});
+
+
+function updateProgress(e: Event) {
+  const { duration, currentTime } = e.target as HTMLAudioElement;
+  const progressPercent = (currentTime / duration) * 100;
+  progress.style.width = `${progressPercent}%`;
+}
+
+audio.addEventListener('timeupdate', updateProgress);

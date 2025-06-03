@@ -1,38 +1,39 @@
-var player = document.getElementById('mario');
-var powerup = {
-    audio: new Audio('http://themushroomkingdom.net/sounds/wav/smb/smb_powerup.wav'),
-    play: function () {
-        this.audio.currentTime = 0;
-        this.audio.play();
-    }
-};
-function movePlayer(element, incrX, incrY) {
-    var x = Number(element.getAttribute('data-x')) + incrX;
-    var y = Number(element.getAttribute('data-y')) + incrY;
-    var speed = 10;
-    if (incrX > 0) {
-        element.style.transform = " translate(".concat(x, "px, ").concat(y, "px) scaleX(1)");
-    }
-    else {
-        element.style.transform = " translate(".concat(x, "px, ").concat(y, "px) scaleX(-1)");
-    }
-    element.setAttribute('data-x', x.toString());
-    element.setAttribute('data-y', y.toString());
+var playBtn = document.getElementById('play');
+var prevBtn = document.getElementById('prev');
+var nextBtn = document.getElementById('next');
+var audio = document.getElementById('audio');
+var cover = document.getElementById('cover');
+var title = document.getElementById('title');
+var musicContainer = document.getElementById('music-container');
+var progressContainer = document.getElementById('progress-container');
+var progress = document.getElementById('progress');
+var songs = ['Juice WRLD Ft Benny Blanco - Real Shit', 'Lil Baby, Lil Durk ft Rodwave - Rich Off Pain', 'Polo G – I Know'];
+var songIndex = 0;
+function loadSong(song) {
+    title.textContent = song;
+    audio.src = "./music/".concat(song, ".mp3");
+    cover.src = "./assets/".concat(song, ".jpg");
 }
-window.addEventListener('keydown', function (e) {
-    if (player !== null) {
-        if (e.key === 'ArrowRight') {
-            player.classList.add('caminar');
-            movePlayer(player, 10, 0);
-        }
-        else if (e.key === 'ArrowLeft') {
-            player.classList.add('caminar');
-            movePlayer(player, -10, 0);
-        }
-    }
+loadSong(songs[songIndex]);
+function playSong() {
+    var _a;
+    (_a = playBtn.querySelector('i.fas')) === null || _a === void 0 ? void 0 : _a.classList.replace('fa-play', 'fa-pause');
+    musicContainer.classList.add('play');
+    audio.play();
+}
+function pauseSong() {
+    var _a;
+    (_a = playBtn.querySelector('i.fas')) === null || _a === void 0 ? void 0 : _a.classList.replace('fa-pause', 'fa-play');
+    musicContainer.classList.remove('play');
+    audio.pause();
+}
+playBtn.addEventListener('click', function () {
+    var isPlaying = musicContainer.classList.contains('play');
+    isPlaying ? pauseSong() : playSong();
 });
-window.addEventListener('keyup', function (e) {
-    if (player !== null) {
-        player.classList.remove('caminar');
-    }
-});
+function updateProgress(e) {
+    var _a = e.target, duration = _a.duration, currentTime = _a.currentTime;
+    var progressPercent = (currentTime / duration) * 100;
+    progress.style.width = "".concat(progressPercent, "%");
+}
+audio.addEventListener('timeupdate', updateProgress);
